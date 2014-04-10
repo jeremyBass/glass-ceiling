@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 cronfile=glassceiling.sh    #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
@@ -47,6 +52,7 @@ if test_memory;
 then
     service nginx restart &> /cron.log
     service php-fpm restart &> /cron.log
+    
 else
     echo "--mem is ok  -- $path/$cronfile $(date)"  &> /cron.log
 fi
