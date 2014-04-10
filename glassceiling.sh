@@ -47,8 +47,8 @@ if test_memory;
 then
     #clear some memory
     echo "--starting a restart  -- $path$cronfile"
-    `service nginx restart`
-    `service php-fpm restart`
+    echo $(service nginx restart)
+    echo $(service php-fpm restart)
 else
     echo "--mem is ok  -- $path$cronfile"
 fi
