@@ -34,7 +34,7 @@ then
     crontab -l > mycron
 
     # Echo new cron into cron file
-    echo "*/1 * * * * $path/$cronfile" >> mycron
+    echo "*/1 * * * * $path$cronfile" >> mycron
 
     # Install new cron file
     crontab mycron
@@ -46,9 +46,9 @@ fi
 if test_memory;
 then
     #clear some memory
-    echo "--starting a restart  -- $path/$cronfile"
+    echo "--starting a restart  -- $path$cronfile"
     `/etc/init.d/nginx restart`
     `/etc/init.d/php-fpm restart`
 else
-    echo "--mem is ok  -- $path/$cronfile"
+    echo "--mem is ok  -- $path$cronfile"
 fi
