@@ -4,8 +4,7 @@ cronfile=glassceiling.sh    #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
 
-if[[ "$path" == "/" ]];
-then
+if [ $path -ne "/" ]; then
     path=""
 fi
 
