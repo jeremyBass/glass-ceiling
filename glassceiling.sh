@@ -4,6 +4,11 @@ cronfile=glassceiling.sh    #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
 
+if[ "$path" == "/" ]
+then
+    path=""
+fi
+
 has_cron(){
     #is the file in the cron?
     return 0 #returning this just to test should
@@ -34,7 +39,7 @@ then
     crontab -l > mycron
 
     # Echo new cron into cron file
-    echo "* * * * * /bin/bash $path$cronfile" >> mycron
+    echo "* * * * * /bin/bash $path/$cronfile" >> mycron
 
     # Install new cron file
     crontab mycron
@@ -46,9 +51,9 @@ fi
 if test_memory;
 then
     #clear some memory
-    echo "--starting a restart  -- $path$cronfile"
+    echo "--starting a restart  -- $path/$cronfile"
     echo $(service nginx restart)
     echo $(service php-fpm restart)
 else
-    echo "--mem is ok  -- $path$cronfile"
+    echo "--mem is ok  -- $path/$cronfile"
 fi
