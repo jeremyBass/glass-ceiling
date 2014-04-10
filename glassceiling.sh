@@ -12,12 +12,7 @@ touch cron.log
 has_cron(){
     #is the file in the cron?
     #return 0 #returning this just to test should
-    #be the next line but it's not working
-    if crontab -l | egrep -v '^$|^#' | grep -q $cronfile; then
-      return 1
-    else
-      return 0
-    fi
+    $(crontab -l | egrep -v '^$|^#' | grep -q $cronfile;) && return 1 || return 0
 }
 test_memory(){
     memusage=$(top -n 1 -b | grep "Mem")
