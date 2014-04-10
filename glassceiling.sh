@@ -52,7 +52,8 @@ if test_memory;
 then
     service nginx restart &> /cron.log
     service php-fpm restart &> /cron.log
-    
+    #echo "It seems that your our of time adn luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
+
 else
     echo "--mem is ok  -- $path/$cronfile $(date)"  &> /cron.log
 fi
