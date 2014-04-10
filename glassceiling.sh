@@ -34,7 +34,7 @@ then
     crontab -l > mycron
 
     # Echo new cron into cron file
-    echo "* * * * * $path$cronfile" >> mycron
+    echo "* * * * * /bin/bash $path$cronfile" >> mycron
 
     # Install new cron file
     crontab mycron
