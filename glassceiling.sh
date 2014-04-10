@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cronfile=glassceiling.sh    #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
