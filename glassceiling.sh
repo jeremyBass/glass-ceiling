@@ -50,10 +50,8 @@ fi
 
 if test_memory;
 then
-    #clear some memory
-    echo "--starting a restart  -- $path/$cronfile"
     echo $(service nginx restart) >> /cron.log
     echo $(service php-fpm restart) >> /cron.log
 else
-    echo "--mem is ok  -- $path/$cronfile"
+    echo "--mem is ok  -- $path/$cronfile $(date)"  >> /cron.log
 fi
