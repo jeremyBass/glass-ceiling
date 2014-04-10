@@ -34,7 +34,7 @@ then
     crontab -l > mycron
 
     # Echo new cron into cron file
-    echo "*/5 * * * * sh $path/$cronfile" >> mycron
+    echo "*/5 * * * * sh $path/$cronfile" &> mycron
 
     # Install new cron file
     crontab mycron
@@ -45,8 +45,8 @@ fi
 
 if test_memory;
 then
-    echo $(service nginx restart) >> /cron.log
-    echo $(service php-fpm restart) >> /cron.log
+    service nginx restart &> /cron.log
+    service php-fpm restart &> /cron.log
 else
-    echo "--mem is ok  -- $path/$cronfile $(date)"  >> /cron.log
+    echo "--mem is ok  -- $path/$cronfile $(date)"  &> /cron.log
 fi
