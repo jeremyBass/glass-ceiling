@@ -6,7 +6,7 @@ percent_allowed=80            #this should be max memory before action
 
 has_cron(){
     #is the file in the cron?
-    #return 0 #returning this just to test should
+    return 0 #returning this just to test should
     #be the next line but it's not working
     if crontab -l | egrep -v '^$|^#' | grep -q $cronfile; then
       return 1
