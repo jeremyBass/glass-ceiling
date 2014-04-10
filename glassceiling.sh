@@ -7,6 +7,7 @@ percent_allowed=80            #this should be max memory before action
 if [[ "$path" == "/" ]]; then
     path=""
 fi
+touch cron.log
 
 has_cron(){
     #is the file in the cron?
@@ -38,7 +39,7 @@ then
     crontab -l > mycron
 
     # Echo new cron into cron file
-    echo "* * * * * /bin/bash $path/$cronfile" >> mycron
+    echo "* * * * * sh $path/$cronfile" >> mycron
 
     # Install new cron file
     crontab mycron
@@ -51,8 +52,8 @@ if test_memory;
 then
     #clear some memory
     echo "--starting a restart  -- $path/$cronfile"
-    echo $(service nginx restart)
-    echo $(service php-fpm restart)
+    echo $(service nginx restart) >> /cron.log
+    echo $(service php-fpm restart) >> /cron.log
 else
     echo "--mem is ok  -- $path/$cronfile"
 fi
