@@ -6,7 +6,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 #ensure that there is a crontab for this user
-$(crontab -l) 1>&2
+$(crontab -l)
 
 cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
