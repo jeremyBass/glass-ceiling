@@ -5,7 +5,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-cronfile=glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
+cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
 
