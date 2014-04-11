@@ -5,7 +5,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-cronfile=glassceiling.sh    #NOTE THIS SHOULD DETECT IT'S SELF
+cronfile=glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
 
@@ -26,7 +26,7 @@ test_memory(){
 
     USEDMEM1=$(expr $USEDMEM \* 100)
     PERCENTAGE=$(expr $USEDMEM1 / $MAXMEM)
-    #if it's above 80% alert
+    
     [[ $PERCENTAG>$percent_allowed ]] && return 1 || return 0
 }
 
@@ -52,7 +52,7 @@ if test_memory;
 then
     service nginx restart &> /cron.log
     service php-fpm restart &> /cron.log
-    #echo "It seems that your our of time adn luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
+    #echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
 
 else
     echo "--mem is ok  -- $path/$cronfile $(date)"  &> /cron.log
