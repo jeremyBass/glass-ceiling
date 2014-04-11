@@ -5,6 +5,9 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+#ensure that there is a crontab for this user
+crontab -e
+
 cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
@@ -12,6 +15,7 @@ percent_allowed=80            #this should be max memory before action
 if [[ "$path" == "/" ]]; then
     path=""
 fi
+
 touch cron.log
 
 has_cron(){
