@@ -19,13 +19,27 @@ if [[ "$path" == "/" ]]; then
     path=""
 fi
 
+# Sets up the crontab for this
 touch cron.log
-
 has_cron(){
     #is the file in the cron?
     #return 0 #returning this just to test should
     $(crontab -l | egrep -v '^$|^#' | grep -q $cronfile;) && return 1 || return 0
 }
+if has_cron;
+then
+    crontab -l > mycron
+    # Echo new cron into cron file
+    echo "*/5 * * * * sh $path/$cronfile" >> mycron
+    # Install new cron file
+    crontab mycron
+    rm mycron
+    echo "$(date) --Installation sucess, memory limit is at $percent_allowed%" >> /cron.log
+fi
+
+
+
+# sets up the function of this script
 test_memory(){
     memusage=$(top -n 1 -b | grep "Mem")
     MAXMEM=$(echo $memusage | cut -d" " -f2 | awk '{print substr($0,1,length($0)-1)}')
@@ -37,16 +51,6 @@ test_memory(){
     [[ $PERCENTAGE>$percent_allowed ]] && return 0 || return 1
 }
 
-if has_cron;
-then
-    crontab -l > mycron
-    # Echo new cron into cron file
-    echo "*/5 * * * * sh $path/$cronfile" >> mycron
-    # Install new cron file
-    crontab mycron
-    rm mycron
-    echo "$(date) --Installation sucess, memory limit is at $percent_allowed%" >> /cron.log
-fi
 
 if test_memory;
 then
