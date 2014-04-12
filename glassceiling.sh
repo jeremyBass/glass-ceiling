@@ -48,8 +48,9 @@ then
     # Install new cron file
     crontab mycron
     rm mycron
+    echo "$(date) --Installation sucess, memory limit is at $percent_allowed%" &> /cron.log
 else
-    echo "cron present"
+    echo "$(date) --Installation failed, cron present" &> /cron.log
 fi
 
 if test_memory;
@@ -59,5 +60,6 @@ then
     #echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
 
 else
-    echo "--mem is ok  -- $path/$cronfile $(date)"  &> /cron.log
+    echo "$(date) --mem is ok  -- $path/$cronfile "  &> /cron.log
 fi
+exit 0
