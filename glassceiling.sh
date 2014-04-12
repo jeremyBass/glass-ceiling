@@ -11,6 +11,7 @@ path=$(pwd)                   #this is the path to the file
 percent_allowed="$1"          #this should be max memory before action
 if [ -z "$1" ]; then
     percent_allowed=80
+else
 	echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
 fi
 
