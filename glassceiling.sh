@@ -39,15 +39,9 @@ test_memory(){
 
 if has_cron;
 then
-    #was not here so add
-    #run this script every 5 mins
-    #crontab -e */5 * * * $path/$cronfile
-    #cat <(crontab -l) <(echo "*/5 * * * $path/$cronfile") | crontab -
     crontab -l > mycron
-
     # Echo new cron into cron file
     echo "*/5 * * * * sh $path/$cronfile" >> mycron
-
     # Install new cron file
     crontab mycron
     rm mycron
