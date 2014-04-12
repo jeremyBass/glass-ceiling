@@ -11,6 +11,7 @@ fi
 cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'S SELF
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
+memusage=0
 
 if [[ "$path" == "/" ]]; then
     path=""
@@ -24,7 +25,7 @@ has_cron(){
     $(crontab -l | egrep -v '^$|^#' | grep -q $cronfile;) && return 1 || return 0
 }
 test_memory(){
-    memusage=$(top -n 1 -b | grep "Mem")
+    $memusage=$(top -n 1 -b | grep "Mem")
     MAXMEM=$(echo $memusage | cut -d" " -f2 | awk '{print substr($0,1,length($0)-1)}')
     USEDMEM=$(echo $memusage | cut -d" " -f4 | awk '{print substr($0,1,length($0)-1)}')
 
