@@ -68,8 +68,5 @@ then
 	echo $(/etc/init.d/php-fpm restart) 1>&2 >> /cron.log
 	echo $(/etc/init.d/nginx restart) 1>&2 >> /cron.log
 	#echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
-
-else
-	echo "$(date) --mem is ok  -- $path/$cronfile "  >> /cron.log
 fi
 exit 0
