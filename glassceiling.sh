@@ -34,7 +34,7 @@ test_memory(){
     USEDMEM1=$(expr $USEDMEM \* 100)
     PERCENTAGE=$(expr $USEDMEM1 / $MAXMEM)
     
-    [[ $PERCENTAG>$percent_allowed ]] && return 1 || return 0
+    [[ $PERCENTAGE>$percent_allowed ]] && return 1 || return 0
 }
 
 if has_cron;
