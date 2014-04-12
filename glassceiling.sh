@@ -17,7 +17,11 @@ PERCENTAGE=0
 
 #ensure that there is a crontab for this user
 #$(crontab -l)
-
+if [ -z "$1" ]; then
+	percent_allowed=80
+else
+	percent_allowed="$1"
+fi
 
 
 if [[ "$path" == "/" ]]; then
@@ -33,12 +37,7 @@ has_cron(){
 }
 if has_cron;
 then
-	if [ -z "$1" ]; then
-		percent_allowed=80
-	else
-		percent_allowed="$1"
-		echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
-	fi
+	echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
 	crontab -l > mycron
 	# Echo new cron into cron file
 	echo "*/2 * * * * sh $path/$cronfile $percent_allowed" >> mycron
