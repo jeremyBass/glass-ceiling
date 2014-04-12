@@ -46,8 +46,6 @@ then
     crontab mycron
     rm mycron
     echo "$(date) --Installation sucess, memory limit is at $percent_allowed%" >> /cron.log
-else
-    echo "$(date) --Installation failed, cron present" >> /cron.log
 fi
 
 if test_memory;
