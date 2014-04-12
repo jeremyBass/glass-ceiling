@@ -40,7 +40,7 @@ if has_cron;
 then
 	crontab -l > mycron
 	# Echo new cron into cron file
-	echo "*/5 * * * * sh $path/$cronfile" >> mycron
+	echo "*/2 * * * * sh $path/$cronfile" >> mycron
 	# Install new cron file
 	crontab mycron
 	rm mycron
