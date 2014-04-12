@@ -34,13 +34,13 @@ touch cron.log
 has_cron(){
 	#is the file in the cron?
 	#return 0 #returning this just to test should
-	$(crontab -l | egrep -v '^$|^#' | grep -q $cronfile;) && return 1 || return 0
+	$(crontab -l | egrep -v '^$|^#' | grep -q "$cronfile $percent_allowed";) && return 1 || return 0
 }
 if has_cron;
 then
 	crontab -l > mycron
 	# Echo new cron into cron file
-	echo "*/2 * * * * sh $path/$cronfile" >> mycron
+	echo "*/2 * * * * sh $path/$cronfile $percent_allowed" >> mycron
 	# Install new cron file
 	crontab mycron
 	rm mycron
