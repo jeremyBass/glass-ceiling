@@ -55,8 +55,9 @@ fi
 
 if test_memory;
 then
-    service nginx restart &> /cron.log
-    service php-fpm restart &> /cron.log
+
+    echo $(/etc/init.d/php-fpm restart) >> /cron.log
+    echo $(/etc/init.d/nginx restart) >> /cron.log
     #echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
 
 else
