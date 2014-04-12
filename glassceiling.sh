@@ -12,6 +12,8 @@ cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'
 path=$(pwd)                   #this is the path to the file 
 percent_allowed=80            #this should be max memory before action
 memusage=0
+USEDMEM=0
+PERCENTAGE=0
 
 if [[ "$path" == "/" ]]; then
     path=""
@@ -56,7 +58,7 @@ fi
 
 if test_memory;
 then
-    echo "$(date) --mem is critical @ $memusage, restarting -- $path/$cronfile " >> /cron.log
+    echo "$(date) --mem is critical, $PERCENTAGE% ($USEDMEM), restarting -- $path/$cronfile " >> /cron.log
     echo $(/etc/init.d/php-fpm restart) 1>&2 >> /cron.log
     echo $(/etc/init.d/nginx restart) 1>&2 >> /cron.log
     #echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
