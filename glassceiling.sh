@@ -9,13 +9,8 @@ cronfile=${0##*/}             #glassceiling.sh      #NOTE THIS SHOULD DETECT IT'
 path=$(pwd)                   #this is the path to the file 
 
 
-if [ -z "$1" ]; then
-	percent_allowed=80
-else
-	percent_allowed="$1"          #this should be max memory before action
-	echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
-fi
 
+percent_allowed=80          #this should be max memory before action
 memusage=0
 USEDMEM=0
 PERCENTAGE=0
@@ -38,6 +33,12 @@ has_cron(){
 }
 if has_cron;
 then
+	if [ -z "$1" ]; then
+		percent_allowed=80
+	else
+		percent_allowed="$1"
+		echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
+	fi
 	crontab -l > mycron
 	# Echo new cron into cron file
 	echo "*/2 * * * * sh $path/$cronfile $percent_allowed" >> mycron
