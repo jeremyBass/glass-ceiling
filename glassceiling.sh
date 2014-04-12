@@ -56,7 +56,7 @@ fi
 
 if test_memory;
 then
-    echo "$(date) --mem is critical, restarting -- $path/$cronfile "  >> /cron.log
+    echo "$(date) --mem is critical @ $memusage, restarting -- $path/$cronfile "  >> /cron.log
     echo $(/etc/init.d/php-fpm restart) >> /cron.log
     echo $(/etc/init.d/nginx restart) >> /cron.log
     #echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
