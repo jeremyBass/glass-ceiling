@@ -48,7 +48,7 @@ then
 fi
 
 is_up(){
-	$(ps auxw | grep nginx | grep -v grep > /dev/null && ps auxw | grep php-fpm | grep -v grep > /dev/null) && return 1 || return 0
+	$(ps auxw | grep nginx | grep -v grep > /dev/null && ps auxw | grep php-fpm | grep -v grep > /dev/null) && return 0 || return 1
 }
 if is_up;
 then
