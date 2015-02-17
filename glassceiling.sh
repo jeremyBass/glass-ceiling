@@ -55,10 +55,8 @@ fi
 is_up(){
 	$(ps auxw | grep nginx | grep -v grep > /dev/null && ps auxw | grep php-fpm | grep -v grep > /dev/null) && return 0 || return 1
 }
-if is_up;
+if ! is_up;
 then
-	# there is nothing to do, and not logging as it's assumed nothing is wrong
-else
 	echo "$(date) --restarting nginx and php-fpm " >> /cron.log
 	echo $(/etc/init.d/php-fpm restart) 1>&2 >> /cron.log
 	echo $(/etc/init.d/nginx restart) 1>&2 >> /cron.log
