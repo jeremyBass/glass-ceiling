@@ -23,6 +23,11 @@ else
 	percent_allowed="$1"
 fi
 
+if [ -z "$2" ]; then
+	increment="/2"
+else
+	increment="$2"
+fi
 
 if [[ "$path" == "/" ]]; then
 	path=""
@@ -37,14 +42,14 @@ has_cron(){
 }
 if has_cron;
 then
-	echo "$(date) --memory limit set at $percent_allowed%" >> /cron.log
+	echo "$(date) --memory limit set at $percent_allowed% at *$increment * * * *" >> /cron.log
 	crontab -l > mycron
 	# Echo new cron into cron file
-	echo "*/2 * * * * sh $path/$cronfile $percent_allowed" >> mycron
+	echo "*$increment * * * * sh $path/$cronfile $percent_allowed $increment" >> mycron
 	# Install new cron file
 	crontab mycron
 	rm mycron
-	echo "$(date) --Installation sucess, memory limit is at $percent_allowed%" >> /cron.log
+	echo "$(date) --Installation sucess, memory limit is at $percent_allowed% at *$increment * * * *" >> /cron.log
 fi
 
 is_up(){
@@ -52,7 +57,7 @@ is_up(){
 }
 if is_up;
 then
-	
+	# there is nothing to do, and not logging as it's assumed nothing is wrong
 else
 	echo "$(date) --restarting nginx and php-fpm " >> /cron.log
 	echo $(/etc/init.d/php-fpm restart) 1>&2 >> /cron.log
@@ -67,10 +72,9 @@ test_memory(){
 
 	USEDMEM1=$(expr $USEDMEM \* 100)
 	PERCENTAGE=$(expr $USEDMEM1 / $MAXMEM)
-	
+
 	[[ $PERCENTAGE>$percent_allowed ]] && return 0 || return 1
 }
-
 
 if test_memory;
 then
@@ -79,9 +83,5 @@ then
 	echo $(/etc/init.d/nginx restart) 1>&2 >> /cron.log
 	#echo "It seems that you're out of memory and luck" | mutt -a "/cron.log" -s "OUT of Memory" -- recipient@domain.com
 fi
-
-
-
-
 
 exit 0
